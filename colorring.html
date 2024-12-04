@@ -47,7 +47,7 @@
         "革", "鼎", "震", "艮", "渐", "归妹", "丰", "旅",
         "巽", "兑", "涣", "节", "中孚", "小过", "既济", "未济"
     ];
-    const colors = ['green', 'red', 'white', 'black'];
+    const colors = ['green', 'blue', 'red', 'yellow', 'white', 'gray', 'black','brown'];
 
     function createColorWheel() {
         const gradient = ctx.createConicGradient(0, centerX, centerY);
@@ -108,13 +108,23 @@
     }
 
     function displayColorInfo(element, avgColor) {
-        const colorInfo = document.getElementById('colorInfo');
-        const div = document.createElement('div');
-        div.className = 'color-item';
-        div.style.backgroundColor = `rgb(${avgColor.r}, ${avgColor.g}, ${avgColor.b})`;
-        div.textContent = `${element}: rgb(${avgColor.r}, ${avgColor.g}, ${avgColor.b})`;
-        colorInfo.appendChild(div);
-    }
+    const colorInfo = document.getElementById('colorInfo');
+    const div = document.createElement('div');
+    div.className = 'color-item';
+
+    // Set background color
+    const backgroundColor = `rgb(${avgColor.r}, ${avgColor.g}, ${avgColor.b})`;
+    div.style.backgroundColor = backgroundColor;
+
+    // Calculate inverted text color
+    const invertedColor = `rgb(${255 - avgColor.r}, ${255 - avgColor.g}, ${255 - avgColor.b})`;
+    div.style.color = invertedColor;
+
+    // Set text content
+    div.textContent = `${element}: ${backgroundColor}`;
+    colorInfo.appendChild(div);
+}
+
 
     // Create the gradient first and then slice it into parts
     createColorWheel();

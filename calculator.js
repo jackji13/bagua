@@ -1,4 +1,4 @@
-import { updateSVGVisibility } from "./script.js";
+import { loadSVGs } from "./script.js";
 
 const gua = [
   { name: "乾", split: ["天", "天"] },
@@ -102,8 +102,9 @@ function processNumbers() {
   result1Display.textContent = `Result 1: ${result1} (${split1[0]}: ${split1Numbers[0]}, ${split1[1]}: ${split1Numbers[1]})`;
   result2Display.textContent = `Result 2: ${result2} (${split2[0]}: ${split2Numbers[0]}, ${split2[1]}: ${split2Numbers[1]})`;
 
-  // Update SVG visibility using the first number of the first result
-  updateSVGVisibility(split1Numbers[0]);
+  // Load the required SVGs
+  console.log(`Loading SVGs for first number: ${split1Numbers[0]}`);
+  loadSVGs(split1Numbers[0]);
 }
 
 // Attach event listener

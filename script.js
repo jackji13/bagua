@@ -1,4 +1,4 @@
-// List of SVG files to load
+// List of SVG files
 const svgFiles = [
   "assets/0.svg", // Always shown
   "assets/1.svg",
@@ -13,42 +13,51 @@ const svgFiles = [
 // Select the container
 const svgContainer = d3.select("#svg-container");
 
-// Load all SVGs into the container but hide them initially
-const loadedSVGs = [];
-svgFiles.forEach((file, index) => {
-  d3.xml(file)
-    .then((data) => {
-      const importedNode = document.importNode(data.documentElement, true);
-
-      // Append the SVG with an ID corresponding to its index
-      const svgElement = svgContainer
-        .append("div")
-        .attr("class", "svg-layer")
-        .attr("id", `svg-${index}`) // ID for controlling visibility
-        .style("display", index === 0 ? "block" : "none") // Show only 0.svg by default
-        .node();
-
-      svgElement.appendChild(importedNode);
-      loadedSVGs.push(svgElement);
-    })
-    .catch((error) => {
-      console.error(`Error loading the SVG file ${file}:`, error);
-    });
-});
-
-// Function to control SVG visibility based on the first number of the first result
-function updateSVGVisibility(firstNumber) {
-  const remainder = firstNumber % 7;
-
-  // Hide all SVGs except 0.svg and the calculated one
-  loadedSVGs.forEach((svg, index) => {
-    if (index === 0 || index === remainder) {
-      svg.style.display = "block";
-    } else {
-      svg.style.display = "none";
-    }
-  });
+// Helper to clear the container
+function clearContainer() {
+  svgContainer.selectAll("*").remove();
 }
 
-// Export the updateSVGVisibility function for use in calculator.js
-export { updateSVGVisibility };
+// Function to load and display the chosen SVG files
+function loadSVGs(firstNumber) {
+  // Clear the container
+  clearContainer();
+
+  let remainder = firstNumber % 7;
+
+  // If remainder is 0, use the first number directly
+  if (remainder === 0) {
+    console.log("Remainder is 0, using the first number directly.");
+    remainder = firstNumber;
+  }
+
+  console.log(`First number of the first result: ${firstNumber}`);
+  console.log(`Calculated remainder (or fallback): ${remainder}`);
+
+  // Always load 0.svg
+  d3.xml(svgFiles[0])
+    .then((data) => {
+      const importedNode = document.importNode(data.documentElement, true);
+      const svgWrapper = document.createElement("div");
+      svgWrapper.classList.add("svg-layer");
+      svgWrapper.appendChild(importedNode);
+      svgContainer.node().appendChild(svgWrapper);
+      console.log(`SVG loaded: ${svgFiles[0]}`);
+    })
+    .catch((error) => console.error(`Error loading ${svgFiles[0]}:`, error));
+
+  // Load the SVG corresponding to the remainder
+  d3.xml(svgFiles[remainder])
+    .then((data) => {
+      const importedNode = document.importNode(data.documentElement, true);
+      const svgWrapper = document.createElement("div");
+      svgWrapper.classList.add("svg-layer");
+      svgWrapper.appendChild(importedNode);
+      svgContainer.node().appendChild(svgWrapper);
+      console.log(`SVG loaded: ${svgFiles[remainder]}`);
+    })
+    .catch((error) => console.error(`Error loading ${svgFiles[remainder]}:`, error));
+}
+
+// Export the function for use in other modules
+export { loadSVGs };

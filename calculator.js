@@ -80,6 +80,7 @@ const result1Display = document.getElementById("result1");
 const result2Display = document.getElementById("result2");
 
 // Process numbers and update results
+// Process numbers and update results
 function processNumbers() {
   const num1 = parseInt(input1.value, 10) || 0;
   const num2 = parseInt(input2.value, 10) || 0;
@@ -98,13 +99,13 @@ function processNumbers() {
   const split1Numbers = split1.map((el) => elementToNumber[el]);
   const split2Numbers = split2.map((el) => elementToNumber[el]);
 
-  // Update the UI
-  result1Display.textContent = `Result 1: ${result1} (${split1[0]}: ${split1Numbers[0]}, ${split1[1]}: ${split1Numbers[1]})`;
-  result2Display.textContent = `Result 2: ${result2} (${split2[0]}: ${split2Numbers[0]}, ${split2[1]}: ${split2Numbers[1]})`;
+  // Update the UI with input numbers next to the names
+  result1Display.textContent = `Result 1: ${result1} (${num1}) (${split1[0]}: ${split1Numbers[0]}, ${split1[1]}: ${split1Numbers[1]})`;
+  result2Display.textContent = `Result 2: ${result2} (${num2}) (${split2[0]}: ${split2Numbers[0]}, ${split2[1]}: ${split2Numbers[1]})`;
 
   // Load the required SVGs and modify them
-  console.log(`Loading SVGs for first number: ${split1Numbers[0]} and modifying with second number: ${split1Numbers[1]}`);
-  loadSVGs(split1Numbers[0], split1Numbers[1]);
+  console.log(`Loading SVGs for first number: ${split1Numbers[0]}, second number: ${split1Numbers[1]}, and input2: ${num2}`);
+  loadSVGs(split1Numbers[0], split1Numbers[1], num2);
 }
 
 // Attach event listener

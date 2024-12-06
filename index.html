@@ -1,15 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/p5.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/addons/p5.sound.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <meta charset="utf-8" />
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SVG Overlap and Calculator</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
 
-  </head>
-  <body>
-    <main>
-    </main>
-    <script src="sketch.js"></script>
-  </body>
+  <div id="svg-container"></div>
+
+  <div class="outcome-container">
+
+    <div class="input-container">
+      <input id="input1" type="number" placeholder="Enter first number">
+      <input id="input2" type="number" placeholder="Enter second number">
+      <button id="submit-btn">Submit</button>
+    </div>
+
+    <div class="result">
+      <div id="result1"></div>
+      <div id="result2"></div>
+    </div>
+
+  </div>
+
+  <script type="module" src="script.js"></script>
+  <script type="module" src="calculator.js"></script>  
+
+</body>
 </html>

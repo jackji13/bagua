@@ -1,5 +1,6 @@
-// Define the 64卦 array and their split elements
-let gua = [
+import { updateSVGVisibility } from "./script.js";
+
+const gua = [
   { name: "乾", split: ["天", "天"] },
   { name: "坤", split: ["地", "地"] },
   { name: "屯", split: ["水", "雷"] },
@@ -67,104 +68,43 @@ let gua = [
 ];
 
 // Mapping chart for transferring element to number
-let elementToNumber = {
-  "天": 1, "泽": 2, "火": 3, "雷": 4, 
-  "风": 5, "水": 6, "山": 7, "地": 8
+const elementToNumber = {
+  天: 1, 泽: 2, 火: 3, 雷: 4, 风: 5, 水: 6, 山: 7, 地: 8
 };
 
-// Input elements
-let input1, input2, button;
-let result1 = "", result2 = "";
-let split1 = [], split2 = [];
+// Select DOM elements
+const input1 = document.getElementById("input1");
+const input2 = document.getElementById("input2");
+const submitButton = document.getElementById("submit-btn");
+const result1Display = document.getElementById("result1");
+const result2Display = document.getElementById("result2");
 
-function setup() {
-  createCanvas(1600, 800); // Combined canvas
-  noLoop();
-
-  // Input fields for numbers
-  input1 = createInput();
-  input1.position(20, 50);
-
-  input2 = createInput();
-  input2.position(20, 100);
-
-  // Button to calculate
-  button = createButton("Submit");
-  button.position(20, 150);
-  button.mousePressed(processNumbers);
-}
-
-function draw() {
-  background(240);
-
-  // Draw results on the left side
-  fill(0);
-  textSize(16);
-  text("Enter two numbers:", 20, 30);
-  text(`Result 1: ${result1} (${split1[0]}, ${split1[1]})`, 20, 200);
-  text(`Result 2: ${result2} (${split2[0]}, ${split2[1]})`, 20, 250);
-
-  // Draw pattern on the right side
-  translate(800, 0);
-  drawPattern();
-}
-
+// Process numbers and update results
 function processNumbers() {
-  let num1 = int(input1.value());
-  let num2 = int(input2.value());
+  const num1 = parseInt(input1.value, 10) || 0;
+  const num2 = parseInt(input2.value, 10) || 0;
 
-  // Process numbers based on the remainder
-  let index1 = (num1 <= 64) ? num1 - 1 : (num1 % 64) - 1;
-  let index2 = (num2 <= 64) ? num2 - 1 : (num2 % 64) - 1;
+  // Calculate indices
+  let index1 = (num1 <= 64 ? num1 - 1 : (num1 % 64) - 1 + 64) % 64;
+  let index2 = (num2 <= 64 ? num2 - 1 : (num2 % 64) - 1 + 64) % 64;
 
-  // Ensure indices are within bounds
-  index1 = (index1 + 64) % 64;
-  index2 = (index2 + 64) % 64;
+  // Get results
+  const result1 = gua[index1].name;
+  const split1 = gua[index1].split;
+  const result2 = gua[index2].name;
+  const split2 = gua[index2].split;
 
-  // Get matching 卦 and their splits
-  result1 = gua[index1].name;
-  split1 = gua[index1].split;
+  // Map split elements to their corresponding numbers
+  const split1Numbers = split1.map((el) => elementToNumber[el]);
+  const split2Numbers = split2.map((el) => elementToNumber[el]);
 
-  result2 = gua[index2].name;
-  split2 = gua[index2].split;
+  // Update the UI
+  result1Display.textContent = `Result 1: ${result1} (${split1[0]}: ${split1Numbers[0]}, ${split1[1]}: ${split1Numbers[1]})`;
+  result2Display.textContent = `Result 2: ${result2} (${split2[0]}: ${split2Numbers[0]}, ${split2[1]}: ${split2Numbers[1]})`;
 
-  redraw();
+  // Update SVG visibility using the first number of the first result
+  updateSVGVisibility(split1Numbers[0]);
 }
 
-function drawPattern() {
-  if (split1.length === 0 || split2.length === 0) return;
-
-  // Get anchor circle position from split1 elements
-  let anchorX = elementToNumber[split1[0]] * 100;
-  let anchorY = elementToNumber[split1[1]] * 100;
-
-  // Get number of rings and distance from split2 elements
-  let numRings = elementToNumber[split2[0]];
-  let ringDistance = elementToNumber[split2[1]] * 20;
-
-  // Get color from system time
-  let h = hour();
-  let m = minute();
-  let s = second();
-  let r = map(h, 0, 23, 0, 255);
-  let g = map(m, 0, 59, 0, 255);
-  let b = map(s, 0, 59, 0, 255);
-
-  fill(r, g, b);
-  noStroke();
-
-  // Draw anchor circle
-  ellipse(anchorX, anchorY, 30, 30);
-
-  // Draw rings
-  for (let i = 1; i <= numRings; i++) {
-    let radius = i * ringDistance;
-    let numCircles = 8; // Fixed number of circles per ring
-    for (let j = 0; j < numCircles; j++) {
-      let angle = TWO_PI / numCircles * j;
-      let x = anchorX + cos(angle) * radius;
-      let y = anchorY + sin(angle) * radius;
-      ellipse(x, y, 20, 20);
-    }
-  }
-}
+// Attach event listener
+submitButton.addEventListener("click", processNumbers);

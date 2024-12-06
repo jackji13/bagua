@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_图层_2" data-name="图层 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 570.4 1061.35">
+  <defs>
+    <style>
+      .cls-1 {
+        stroke: #e50012;
+      }
+
+      .cls-1, .cls-2, .cls-3 {
+        fill: none;
+        stroke-miterlimit: 10;
+      }
+
+      .cls-2 {
+        stroke: #231815;
+      }
+
+      .cls-3 {
+        stroke: #000;
+        stroke-width: 0px;
+      }
+    </style>
+  </defs>
+  <g id="_图层_8" data-name="图层 8">
+    <g>
+      <circle class="cls-2" cx="219.54" cy="294.72" r="2.52"/>
+      <circle class="cls-2" cx="161.14" cy="322.52" r="2.52"/>
+      <circle class="cls-2" cx="130.99" cy="384.74" r="2.52"/>
+      <circle class="cls-2" cx="73.5" cy="466.34" r="2.52"/>
+      <circle class="cls-2" cx="68.45" cy="476.43" r="2.52"/>
+      <circle class="cls-2" cx="56.03" cy="499.39" r="2.52"/>
+      <circle class="cls-2" cx="47.39" cy="520.11" r="2.52"/>
+      <circle class="cls-2" cx="27.97" cy="569.35" r="2.52"/>
+      <polyline class="cls-1" points="219.54 295.91 219.54 292.33 219.54 288.32 218.07 282.42 217.01 278.63 215.12 274.63 213.78 271.47 211.54 268.52 209.01 267.26 206.69 265.99 203.95 265.99 199.74 265.99 195.95 267.89 187.94 275.68 176.56 291.48 162.45 320.56 153.18 342.68 142.23 367.75 124.32 392.82 90.82 440.43 75.23 461.07 57.53 494.15 49.95 513.11 27.97 569.35"/>
+    </g>
+    <rect class="cls-3" x="0" y="0" width="570.4" height="1061.35"/>
+  </g>
+</svg>

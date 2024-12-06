@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_图层_2" data-name="图层 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 570.4 1061.35">
+  <defs>
+    <style>
+      .cls-1 {
+        stroke: #e50012;
+      }
+
+      .cls-1, .cls-2, .cls-3 {
+        fill: none;
+        stroke-miterlimit: 10;
+      }
+
+      .cls-2 {
+        stroke: #231815;
+      }
+
+      .cls-3 {
+        stroke: #000;
+        stroke-width: 0px;
+      }
+    </style>
+  </defs>
+  <g id="_图层_8" data-name="图层 8">
+    <g>
+      <rect class="cls-3" x="0" y="0" width="570.4" height="1061.35"/>
+      <g>
+        <circle class="cls-2" cx="285.2" cy="152.72" r="2.52"/>
+        <circle class="cls-2" cx="285.2" cy="173.61" r="2.52"/>
+        <circle class="cls-2" cx="285.61" cy="208.78" r="2.52"/>
+        <circle class="cls-2" cx="285.61" cy="220.17" r="2.52"/>
+        <circle class="cls-2" cx="285.61" cy="237.57" r="2.52"/>
+        <circle class="cls-2" cx="285.8" cy="256.3" r="2.52"/>
+        <circle class="cls-2" cx="285.91" cy="273.87" r="2.52"/>
+        <circle class="cls-2" cx="286.01" cy="293.18" r="2.52"/>
+        <circle class="cls-2" cx="286.17" cy="309.8" r="2.52"/>
+        <circle class="cls-2" cx="286.17" cy="325.04" r="2.52"/>
+        <circle class="cls-2" cx="286.32" cy="340.71" r="2.52"/>
+        <circle class="cls-2" cx="286.42" cy="356.32" r="2.52"/>
+        <circle class="cls-2" cx="286.42" cy="371.92" r="2.52"/>
+        <circle class="cls-2" cx="286.59" cy="387.26" r="2.52"/>
+        <circle class="cls-2" cx="286.59" cy="401.39" r="2.52"/>
+        <circle class="cls-2" cx="286.71" cy="417.67" r="2.52"/>
+        <circle class="cls-2" cx="286.89" cy="435.23" r="2.52"/>
+        <circle class="cls-2" cx="286.89" cy="451.66" r="2.52"/>
+        <circle class="cls-2" cx="287.14" cy="461.51" r="2.52"/>
+        <circle class="cls-2" cx="287.14" cy="471.36" r="2.52"/>
+        <circle class="cls-2" cx="287.14" cy="485.31" r="2.52"/>
+        <circle class="cls-2" cx="287.14" cy="504.19" r="2.52"/>
+        <circle class="cls-2" cx="287.14" cy="520.68" r="2.52"/>
+        <polyline class="cls-1" points="287.14 559.07 287.14 500.17 285.2 150.71"/>
+      </g>
+    </g>
+  </g>
+</svg>

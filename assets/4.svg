@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_图层_2" data-name="图层 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 570.4 1061.35">
+  <defs>
+    <style>
+      .cls-1 {
+        stroke: #e50012;
+      }
+
+      .cls-1, .cls-2, .cls-3 {
+        fill: none;
+        stroke-miterlimit: 10;
+      }
+
+      .cls-2 {
+        stroke: #231815;
+      }
+
+      .cls-3 {
+        stroke: #000;
+        stroke-width: 0px;
+      }
+    </style>
+  </defs>
+  <g id="_图层_8" data-name="图层 8">
+    <g>
+      <g>
+        <circle class="cls-2" cx="223.95" cy="326.34" r="2.52"/>
+        <circle class="cls-2" cx="223" cy="415.15" r="2.52"/>
+        <circle class="cls-2" cx="248.42" cy="513.11" r="2.52"/>
+        <circle class="cls-2" cx="253.93" cy="535.58" r="2.52"/>
+        <circle class="cls-2" cx="258.97" cy="575.46" r="2.52"/>
+        <circle class="cls-2" cx="260.95" cy="709.8" r="2.52"/>
+        <circle class="cls-2" cx="240.79" cy="900.61" r="2.52"/>
+        <circle class="cls-2" cx="240.79" cy="919.8" r="2.52"/>
+        <circle class="cls-2" cx="238.27" cy="992.38" r="2.52"/>
+        <circle class="cls-2" cx="235.2" cy="1017.29" r="2.52"/>
+        <circle class="cls-2" cx="231.08" cy="1035.69" r="2.52"/>
+        <circle class="cls-2" cx="213.05" cy="1054.32" r="2.52"/>
+        <polyline class="cls-1" points="224.41 324.24 219.54 382.1 219.54 400.59 224.41 420.27 235.43 463.56 248.42 513.11 253.93 535.58 258.65 546.6 259.44 600.52 259.44 660.91 259.44 696.71 264.55 726.6"/>
+        <polyline class="cls-1" points="257.35 881.71 240.47 899.64 238.71 997.72 232.04 1034.63 223.95 1044.83 213.05 1054.32"/>
+      </g>
+      <rect class="cls-3" x="0" y="0" width="570.4" height="1061.35"/>
+    </g>
+  </g>
+</svg>

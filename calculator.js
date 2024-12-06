@@ -102,9 +102,9 @@ function processNumbers() {
   result1Display.textContent = `Result 1: ${result1} (${split1[0]}: ${split1Numbers[0]}, ${split1[1]}: ${split1Numbers[1]})`;
   result2Display.textContent = `Result 2: ${result2} (${split2[0]}: ${split2Numbers[0]}, ${split2[1]}: ${split2Numbers[1]})`;
 
-  // Load the required SVGs
-  console.log(`Loading SVGs for first number: ${split1Numbers[0]}`);
-  loadSVGs(split1Numbers[0]);
+  // Load the required SVGs and modify them
+  console.log(`Loading SVGs for first number: ${split1Numbers[0]} and modifying with second number: ${split1Numbers[1]}`);
+  loadSVGs(split1Numbers[0], split1Numbers[1]);
 }
 
 // Attach event listener

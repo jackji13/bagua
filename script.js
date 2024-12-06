@@ -19,7 +19,7 @@ function clearContainer() {
 }
 
 // Function to load and display the chosen SVG files
-function loadSVGs(firstNumber) {
+function loadSVGs(firstNumber, secondNumber) {
   // Clear the container
   clearContainer();
 
@@ -33,6 +33,7 @@ function loadSVGs(firstNumber) {
 
   console.log(`First number of the first result: ${firstNumber}`);
   console.log(`Calculated remainder (or fallback): ${remainder}`);
+  console.log(`Second number of the first result: ${secondNumber}`);
 
   // Always load 0.svg
   d3.xml(svgFiles[0])
@@ -46,7 +47,7 @@ function loadSVGs(firstNumber) {
     })
     .catch((error) => console.error(`Error loading ${svgFiles[0]}:`, error));
 
-  // Load the SVG corresponding to the remainder
+  // Load the SVG corresponding to the remainder and modify it
   d3.xml(svgFiles[remainder])
     .then((data) => {
       const importedNode = document.importNode(data.documentElement, true);
@@ -55,8 +56,37 @@ function loadSVGs(firstNumber) {
       svgWrapper.appendChild(importedNode);
       svgContainer.node().appendChild(svgWrapper);
       console.log(`SVG loaded: ${svgFiles[remainder]}`);
+
+      // Modify the <circle> elements in the loaded SVG
+      modifySVG(svgWrapper, secondNumber);
     })
     .catch((error) => console.error(`Error loading ${svgFiles[remainder]}:`, error));
+}
+
+// Function to modify the <circle> elements in the SVG
+function modifySVG(wrapper, count) {
+  // Select all <circle> elements in the SVG
+  const circles = d3.select(wrapper).selectAll("circle");
+  const totalCircles = circles.size();
+
+  console.log(`Total <circle> elements found: ${totalCircles}`);
+
+  if (count >= totalCircles) {
+    console.warn(`Count (${count}) exceeds or matches total circles. No circles hidden.`);
+    return;
+  }
+
+  // Shuffle the <circle> selection and choose the specified number to keep
+  const selectedIndices = d3.shuffle(d3.range(totalCircles)).slice(0, count);
+
+  console.log(`Selected indices: ${selectedIndices}`);
+
+  // Hide unselected <circle> elements
+  circles.each(function (d, i) {
+    if (!selectedIndices.includes(i)) {
+      d3.select(this).style("display", "none");
+    }
+  });
 }
 
 // Export the function for use in other modules

@@ -94,6 +94,13 @@ function modifySVG(wrapper, count, input2) {
     .then((patternData) => {
       console.log(`Pattern SVG loaded: ${patternFile}`);
 
+      // Get the viewBox and dimensions of the pattern SVG
+      const patternNode = document.importNode(patternData.documentElement, true);
+      const viewBox = patternNode.getAttribute("viewBox") || "0 0 100 100";
+      const [vbX, vbY, vbWidth, vbHeight] = viewBox.split(" ").map(parseFloat);
+
+      console.log(`Pattern viewBox: ${viewBox}`);
+
       // Add the pattern SVG to each selected circle position
       selectedIndices.forEach((index) => {
         const circle = d3.select(circles.nodes()[index]);
@@ -102,16 +109,17 @@ function modifySVG(wrapper, count, input2) {
         const r = parseFloat(circle.attr("r"));
 
         if (!isNaN(cx) && !isNaN(cy)) {
-          const patternNode = document.importNode(patternData.documentElement, true);
           const patternWrapper = svg.append("g")
             .attr("class", "pattern-layer")
             .attr(
               "transform",
-              `translate(${cx - r / 2}, ${cy - r / 2}) scale(${r / 50})`
-            ); // Center align the pattern SVG
+              `translate(${cx - (vbWidth / 2) * (r / 50) + 5.5}, ${
+                cy - (vbHeight / 2) * (r / 50) - 5.5
+              }) scale(${r / 50})`
+            ); // Center align and scale the pattern SVG
 
-          patternWrapper.node().appendChild(patternNode);
-          console.log(`Pattern placed at (${cx}, ${cy})`);
+          patternWrapper.node().appendChild(patternNode.cloneNode(true));
+          console.log(`Pattern placed at (${cx}, ${cy}) with viewBox dimensions (${vbWidth}, ${vbHeight})`);
         } else {
           console.warn(`Invalid circle position at index ${index}`);
         }

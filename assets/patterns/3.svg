@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg id="_图层_2" data-name="图层 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 841.89 841.89">
-  <defs>
-    <style>
-      .cls--1 {
-        fill: #231815;
-        stroke-width: 0px;
-      }
-    </style>
-  </defs>
+<svg class="patternfilter" id="_图层_2" data-name="图层 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 841.89 841.89">
   <g id="_3" data-name="3">
     <g>
       <circle class="cls--1" cx="420.94" cy="90.46" r="27.32"/>

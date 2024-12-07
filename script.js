@@ -71,7 +71,7 @@ function modifySVG(wrapper, count, input2, result1Number, rgb, gua) {
   const [r, g, b] = rgb || [0, 0, 0]; // Default to black if RGB is undefined
   const rgbString = `rgb(${r}, ${g}, ${b})`;
 
-  console.log(`Applying color filter: ${rgbString} for Result 1 Number: ${result1Number}`);
+  console.log(`Applying CSS fill: ${rgbString} for Result 1 Number: ${result1Number}`);
 
   // Select all <circle> elements in the SVG
   const svg = d3.select(wrapper).select("svg");
@@ -117,24 +117,20 @@ function modifySVG(wrapper, count, input2, result1Number, rgb, gua) {
             .attr("class", "pattern-layer")
             .attr(
               "transform",
-              `translate(${cx - (vbWidth / 2) * (r / 50) + 5.5}, ${
-                cy - (vbHeight / 2) * (r / 50) - 5.5
-              }) scale(${r / 50})`
+              `translate(${cx - (vbWidth / 2) * (r / 50) - 29}, ${
+                cy - (vbHeight / 2) * (r / 50) - 68
+              }) scale(${r / 15})`
             ); // Center align and scale the pattern SVG
 
           const clonedPattern = patternNode.cloneNode(true);
           patternWrapper.node().appendChild(clonedPattern);
 
-          // Apply a color filter overlay
-          svg.append("rect")
-            .attr("x", cx - vbWidth / 2)
-            .attr("y", cy - vbHeight / 2)
-            .attr("width", vbWidth)
-            .attr("height", vbHeight)
-            .attr("fill", rgbString)
-            .attr("opacity", 0.5); // Adjust opacity for blending
+          // Apply the CSS fill to elements with the `.patternfilter` class
+          d3.select(patternWrapper.node())
+            .selectAll(".patternfilter")
+            .attr("fill", rgbString); // Apply the dynamic color
 
-          console.log(`Pattern placed at (${cx}, ${cy}) with RGB filter: ${rgbString}`);
+          console.log(`CSS fill applied to .patternfilter with RGB: ${rgbString}`);
         } else {
           console.warn(`Invalid circle position at index ${index}`);
         }

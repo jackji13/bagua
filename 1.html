@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SVG Test</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+  <div id="test-svg-container"></div>
+  <script>
+    d3.xml("assets/patterns/1.svg").then((data) => {
+      const svgNode = document.importNode(data.documentElement, true);
+      document.getElementById("test-svg-container").appendChild(svgNode);
+
+      const circles = d3.select(svgNode).selectAll("circle");
+
+      circles.each(function (d, i) {
+        this.setAttribute("fill", "rgb(255, 0, 0)"); // Set to red
+        this.setAttribute("stroke", "rgb(0, 0, 255)"); // Set to blue
+        this.setAttribute("stroke-width", "2");
+        console.log(
+          `Circle ${i} updated with fill: ${this.getAttribute("fill")}`
+        );
+      });
+    });
+  </script>
+</body>
+</html>

@@ -22,7 +22,7 @@ function clearContainer() {
 }
 
 // Function to load and display the chosen SVG files
-function loadSVGs(firstNumber, secondNumber, input2) {
+function loadSVGs(firstNumber, secondNumber, input2, rgb, gua) {
   // Clear the container
   clearContainer();
 
@@ -61,14 +61,18 @@ function loadSVGs(firstNumber, secondNumber, input2) {
       svgContainer.node().appendChild(svgWrapper);
       console.log(`SVG loaded: ${svgFiles[remainder]}`);
 
-      // Modify the <circle> elements in the loaded SVG
-      modifySVG(svgWrapper, secondNumber, input2);
+      // Modify the <circle> elements and apply color to the new SVGs
+      modifySVG(svgWrapper, secondNumber, input2, firstNumber, rgb, gua);
     })
     .catch((error) => console.error(`Error loading ${svgFiles[remainder]}:`, error));
 }
 
-// Function to modify the <circle> elements in the SVG
-function modifySVG(wrapper, count, input2) {
+function modifySVG(wrapper, count, input2, result1Number, rgb, gua) {
+  const [r, g, b] = rgb || [0, 0, 0]; // Default to black if RGB is undefined
+  const rgbString = `rgb(${r}, ${g}, ${b})`;
+
+  console.log(`Applying color filter: ${rgbString} for Result 1 Number: ${result1Number}`);
+
   // Select all <circle> elements in the SVG
   const svg = d3.select(wrapper).select("svg");
   const circles = svg.selectAll("circle");
@@ -118,8 +122,19 @@ function modifySVG(wrapper, count, input2) {
               }) scale(${r / 50})`
             ); // Center align and scale the pattern SVG
 
-          patternWrapper.node().appendChild(patternNode.cloneNode(true));
-          console.log(`Pattern placed at (${cx}, ${cy}) with viewBox dimensions (${vbWidth}, ${vbHeight})`);
+          const clonedPattern = patternNode.cloneNode(true);
+          patternWrapper.node().appendChild(clonedPattern);
+
+          // Apply a color filter overlay
+          svg.append("rect")
+            .attr("x", cx - vbWidth / 2)
+            .attr("y", cy - vbHeight / 2)
+            .attr("width", vbWidth)
+            .attr("height", vbHeight)
+            .attr("fill", rgbString)
+            .attr("opacity", 0.5); // Adjust opacity for blending
+
+          console.log(`Pattern placed at (${cx}, ${cy}) with RGB filter: ${rgbString}`);
         } else {
           console.warn(`Invalid circle position at index ${index}`);
         }
@@ -134,7 +149,6 @@ function modifySVG(wrapper, count, input2) {
     }
   });
 }
-
 
 // Export the function for use in other modules
 export { loadSVGs };

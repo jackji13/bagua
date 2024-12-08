@@ -78,8 +78,8 @@ function modifySVG(wrapper, count, input2, result1Number, rgb, gua, result2Numbe
   console.log(`Result 2 First Number: ${result2Number}`);
 
   // Calculate scale factor based on result2Number
-  const minScale = 1 / 70;
-  const maxScale = 1 / 15;
+  const minScale = 1 / 30;
+  const maxScale = 1 / 7;
   const scaleFactor = minScale + ((result2Number - 1) / 7) * (maxScale - minScale);
   console.log(`Calculated scale factor: ${scaleFactor}`);
 
@@ -167,8 +167,6 @@ function modifySVG(wrapper, count, input2, result1Number, rgb, gua, result2Numbe
     });
   }
 }
-
-
 
 // Export the function for use in other modules
 export { loadSVGs };

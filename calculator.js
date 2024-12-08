@@ -94,18 +94,19 @@ function processNumbers() {
   const result2 = gua[index2].name;
   const split2 = gua[index2].split;
 
-  // Map split elements to their corresponding numbers
+  // Map split elements to numbers
   const split1Numbers = split1.map((el) => elementToNumber[el]);
   const split2Numbers = split2.map((el) => elementToNumber[el]);
 
-  // Update the UI
+  // Update UI
   result1Display.textContent = `Result 1: ${result1} (${num1}) (${split1[0]}: ${split1Numbers[0]}, ${split1[1]}: ${split1Numbers[1]})`;
   result2Display.textContent = `Result 2: ${result2} (${num2}) (${split2[0]}: ${split2Numbers[0]}, ${split2[1]}: ${split2Numbers[1]})`;
 
-  // Load the required SVGs and modify them
+  // Load and modify SVGs
   console.log(`Loading SVGs for first number: ${split1Numbers[0]} and modifying with second number: ${split1Numbers[1]}, input2: ${num2}`);
-  loadSVGs(split1Numbers[0], split1Numbers[1], num2, gua[index1].rgb, gua);
+  loadSVGs(split1Numbers[0], split1Numbers[1], num2, gua[index1].rgb, gua, split2Numbers[0]);
 }
+
 
 // Attach event listener
 submitButton.addEventListener("click", processNumbers);

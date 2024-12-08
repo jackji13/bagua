@@ -21,14 +21,12 @@ function clearContainer() {
   svgContainer.selectAll("*").remove();
 }
 
-// Function to load and display the chosen SVG files
-function loadSVGs(firstNumber, secondNumber, input2, rgb, gua) {
+function loadSVGs(firstNumber, secondNumber, input2, rgb, gua, result2Number) {
   // Clear the container
   clearContainer();
 
   let remainder = firstNumber % 7;
 
-  // If remainder is 0, use the first number directly
   if (remainder === 0) {
     console.log("Remainder is 0, using the first number directly.");
     remainder = firstNumber;
@@ -61,17 +59,29 @@ function loadSVGs(firstNumber, secondNumber, input2, rgb, gua) {
       svgContainer.node().appendChild(svgWrapper);
       console.log(`SVG loaded: ${svgFiles[remainder]}`);
 
-      // Modify the <circle> elements and apply color to the new SVGs
-      modifySVG(svgWrapper, secondNumber, input2, firstNumber, rgb, gua);
+      // Ensure result2Number is passed correctly
+      if (result2Number === undefined || isNaN(result2Number)) {
+        console.error("Error: result2Number is undefined or NaN.");
+        return;
+      }
+
+      modifySVG(svgWrapper, secondNumber, input2, firstNumber, rgb, gua, result2Number);
     })
     .catch((error) => console.error(`Error loading ${svgFiles[remainder]}:`, error));
 }
 
-function modifySVG(wrapper, count, input2, result1Number, rgb, gua) {
+function modifySVG(wrapper, count, input2, result1Number, rgb, gua, result2Number) {
   const [r, g, b] = rgb || [0, 0, 0]; // Default to black if RGB is undefined
   const rgbString = `rgb(${r}, ${g}, ${b})`;
 
   console.log(`Applying CSS fill: ${rgbString} for Result 1 Number: ${result1Number}`);
+  console.log(`Result 2 First Number: ${result2Number}`);
+
+  // Calculate scale factor based on result2Number
+  const minScale = 1 / 70;
+  const maxScale = 1 / 15;
+  const scaleFactor = minScale + ((result2Number - 1) / 7) * (maxScale - minScale);
+  console.log(`Calculated scale factor: ${scaleFactor}`);
 
   // Select all <circle> elements in the SVG
   const svg = d3.select(wrapper).select("svg");
@@ -80,9 +90,9 @@ function modifySVG(wrapper, count, input2, result1Number, rgb, gua) {
 
   console.log(`Total <circle> elements found: ${totalCircles}`);
 
-  if (count >= totalCircles) {
-    console.warn(`Count (${count}) exceeds or matches total circles. No circles hidden.`);
-    return;
+  if (count > totalCircles) {
+    console.warn(`Count (${count}) exceeds total circles. Limiting count to ${totalCircles}.`);
+    count = totalCircles; // Limit count to total circles
   }
 
   // Shuffle the <circle> selection and choose the specified number to keep
@@ -117,9 +127,9 @@ function modifySVG(wrapper, count, input2, result1Number, rgb, gua) {
             .attr("class", "pattern-layer")
             .attr(
               "transform",
-              `translate(${cx - (vbWidth / 2) * (r / 50) - 29}, ${
-                cy - (vbHeight / 2) * (r / 50) - 68
-              }) scale(${r / 15})`
+              `translate(${cx - (vbWidth / 2) * scaleFactor * r}, ${
+                cy - (vbHeight / 2) * scaleFactor * r
+              }) scale(${scaleFactor * r})`
             ); // Center align and scale the pattern SVG
 
           const clonedPattern = patternNode.cloneNode(true);
@@ -138,12 +148,14 @@ function modifySVG(wrapper, count, input2, result1Number, rgb, gua) {
     })
     .catch((error) => console.error(`Error loading pattern SVG: ${patternFile}`, error));
 
-  // Hide unselected <circle> elements
-  circles.each(function (d, i) {
-    if (!selectedIndices.includes(i)) {
-      d3.select(this).style("display", "none");
-    }
-  });
+  // Hide unselected <circle> elements only if count < total
+  if (count < totalCircles) {
+    circles.each(function (d, i) {
+      if (!selectedIndices.includes(i)) {
+        d3.select(this).style("display", "none");
+      }
+    });
+  }
 }
 
 // Export the function for use in other modules

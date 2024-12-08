@@ -108,29 +108,37 @@ function modifySVG(wrapper, count, input2, result1Number, rgb, gua, result2Numbe
     .then((patternData) => {
       console.log(`Pattern SVG loaded: ${patternFile}`);
 
-      // Get the viewBox and dimensions of the pattern SVG
+      // Append the pattern node temporarily to measure its bounding box
       const patternNode = document.importNode(patternData.documentElement, true);
-      const viewBox = patternNode.getAttribute("viewBox") || "0 0 100 100";
-      const [vbX, vbY, vbWidth, vbHeight] = viewBox.split(" ").map(parseFloat);
+      const tempPattern = svg.append("g").style("visibility", "hidden").node();
+      tempPattern.appendChild(patternNode);
 
-      console.log(`Pattern viewBox: ${viewBox}`);
+      // Get the bounding box dimensions
+      const bbox = tempPattern.getBBox();
+      const vbWidth = bbox.width;
+      const vbHeight = bbox.height;
+      svg.node().removeChild(tempPattern);
+
+      console.log(`Pattern bounding box: ${vbWidth}x${vbHeight}`);
 
       // Add the pattern SVG to each selected circle position
       selectedIndices.forEach((index) => {
         const circle = d3.select(circles.nodes()[index]);
         const cx = parseFloat(circle.attr("cx"));
         const cy = parseFloat(circle.attr("cy"));
-        const r = parseFloat(circle.attr("r"));
 
         if (!isNaN(cx) && !isNaN(cy)) {
+          // Apply a slight upward offset for better centering
+          const verticalAdjustment = -5; // Adjust upward by 5 units
+
           const patternWrapper = svg.append("g")
             .attr("class", "pattern-layer")
             .attr(
               "transform",
-              `translate(${cx - (vbWidth / 2) * scaleFactor * r}, ${
-                cy - (vbHeight / 2) * scaleFactor * r
-              }) scale(${scaleFactor * r})`
-            ); // Center align and scale the pattern SVG
+              `translate(${cx - (vbWidth * scaleFactor) / 2}, ${
+                cy - (vbHeight * scaleFactor) / 2 + verticalAdjustment
+              }) scale(${scaleFactor})`
+            ); // Center align the pattern SVG
 
           const clonedPattern = patternNode.cloneNode(true);
           patternWrapper.node().appendChild(clonedPattern);
@@ -140,7 +148,9 @@ function modifySVG(wrapper, count, input2, result1Number, rgb, gua, result2Numbe
             .selectAll(".patternfilter")
             .attr("fill", rgbString); // Apply the dynamic color
 
-          console.log(`CSS fill applied to .patternfilter with RGB: ${rgbString}`);
+          console.log(
+            `Pattern placed at (${cx}, ${cy}) with adjusted vertical centering and RGB: ${rgbString}`
+          );
         } else {
           console.warn(`Invalid circle position at index ${index}`);
         }
@@ -157,6 +167,8 @@ function modifySVG(wrapper, count, input2, result1Number, rgb, gua, result2Numbe
     });
   }
 }
+
+
 
 // Export the function for use in other modules
 export { loadSVGs };

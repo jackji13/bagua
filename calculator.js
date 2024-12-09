@@ -107,6 +107,5 @@ function processNumbers() {
   loadSVGs(split1Numbers[0], split1Numbers[1], num2, gua[index1].rgb, gua, split2Numbers[0]);
 }
 
-
 // Attach event listener
 submitButton.addEventListener("click", processNumbers);

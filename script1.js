@@ -78,8 +78,8 @@ function modifySVG(wrapper, count, input2, result1Number, rgb, gua, result2Numbe
   console.log(`Result 2 First Number: ${result2Number}`);
 
   // Calculate scale factor based on result2Number
-  const minScale = 1 / 60;
-  const maxScale = 1 / 30;
+  const minScale = 1 / 30;
+  const maxScale = 1 / 7;
   const scaleFactor = minScale + ((result2Number - 1) / 7) * (maxScale - minScale);
   console.log(`Calculated scale factor: ${scaleFactor}`);
 
@@ -131,61 +131,30 @@ function modifySVG(wrapper, count, input2, result1Number, rgb, gua, result2Numbe
           // Apply a slight upward offset for better centering
           const verticalAdjustment = -5; // Adjust upward by 5 units
 
-          // Add one pattern at the center of the circle
-          const centerPatternWrapper = svg.append("g")
-            .attr("class", "pattern-layer-center")
+          const patternWrapper = svg.append("g")
+            .attr("class", "pattern-layer")
             .attr(
               "transform",
-              `translate(${cx - (vbWidth * scaleFactor) / 2}, ${cy - (vbHeight * scaleFactor) / 2 + verticalAdjustment
+              `translate(${cx - (vbWidth * scaleFactor) / 2}, ${
+                cy - (vbHeight * scaleFactor) / 2 + verticalAdjustment
               }) scale(${scaleFactor})`
-            );
+            ); // Center align the pattern SVG
 
-          const centerPattern = patternNode.cloneNode(true);
-          centerPatternWrapper.node().appendChild(centerPattern);
+          const clonedPattern = patternNode.cloneNode(true);
+          patternWrapper.node().appendChild(clonedPattern);
 
-          d3.select(centerPatternWrapper.node())
+          // Apply the CSS fill to elements with the `.patternfilter` class
+          d3.select(patternWrapper.node())
             .selectAll(".patternfilter")
-            .attr("fill", rgbString); // Apply the dynamic color to the center pattern
+            .attr("fill", rgbString); // Apply the dynamic color
 
-          console.log(`Center pattern placed at (${cx}, ${cy}) with RGB: ${rgbString}`);
-
-          // Calculate the positions of `n` patterns around the circle
-          const angleIncrement = (2 * Math.PI) / result2Number; // Divide 360° into `result2Number` parts
-          const radius = (vbWidth * scaleFactor) * 1.5; // Set a radius for the circular arrangement
-
-          for (let i = 0; i < result2Number; i++) {
-            const angle = i * angleIncrement; // Current angle in radians
-            const dx = Math.cos(angle) * radius; // X-offset based on angle and radius
-            const dy = Math.sin(angle) * radius; // Y-offset based on angle and radius
-
-            // Add the pattern to the calculated position
-            const patternWrapper = svg.append("g")
-              .attr("class", `pattern-layer-${i}`) // Unique class for each pattern
-              .attr(
-                "transform",
-                `translate(${cx + dx - (vbWidth * scaleFactor) / 2}, ${cy + dy - (vbHeight * scaleFactor) / 2 + verticalAdjustment
-                }) scale(${scaleFactor})`
-              ); // Position based on circle center and calculated offsets
-
-            const clonedPattern = patternNode.cloneNode(true);
-            patternWrapper.node().appendChild(clonedPattern);
-
-            // Apply the CSS fill to elements with the `.patternfilter` class
-            d3.select(patternWrapper.node())
-              .selectAll(".patternfilter")
-              .attr("fill", rgbString); // Apply the dynamic color
-
-            console.log(
-              `Pattern ${i + 1} placed at (${cx + dx}, ${cy + dy}) with RGB: ${rgbString}`
-            );
-          }
+          console.log(
+            `Pattern placed at (${cx}, ${cy}) with adjusted vertical centering and RGB: ${rgbString}`
+          );
         } else {
           console.warn(`Invalid circle position at index ${index}`);
         }
       });
-
-
-
     })
     .catch((error) => console.error(`Error loading pattern SVG: ${patternFile}`, error));
 

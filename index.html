@@ -28,8 +28,30 @@
 
   <a href="colorring.html">Color Ring</a>
 
+  <!-- Invert Button -->
+  <button id="invert-btn" class="invert-btn">Invert Background</button>
+
   <script type="module" src="script.js"></script>
   <script type="module" src="calculator.js"></script>  
 
+  <script>
+
+    document.getElementById("invert-btn").addEventListener("click", () => {
+  const body = document.body;
+  const currentColor = getComputedStyle(body).backgroundColor;
+
+  // Toggle background color
+  if (currentColor === "rgb(255, 255, 255)") {
+    body.style.backgroundColor = "#000";
+    body.style.color = "#fff"; // Adjust text color for contrast
+  } else {
+    body.style.backgroundColor = "#fff";
+    body.style.color = "#000"; // Reset text color
+  }
+});
+
+  </script>
+  
 </body>
+
 </html>
